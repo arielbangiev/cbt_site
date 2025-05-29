@@ -620,15 +620,53 @@
             z-index: 1;
         }
         
+        /* Testimonials Enhanced */
+        .testimonials-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+        
+        .testimonials-slider {
+            position: relative;
+            height: 500px;
+            perspective: 1200px;
+        }
+        
         .testimonial-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             padding: 60px;
             text-align: center;
             box-shadow: 0 25px 80px rgba(139, 115, 85, 0.15);
-            position: relative;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: translateX(100%) scale(0.8) rotateY(-20deg);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             overflow: hidden;
             border: 1px solid rgba(232, 213, 196, 0.5);
+        }
+        
+        .testimonial-card.active {
+            opacity: 1;
+            transform: translateX(0) scale(1) rotateY(0);
+            z-index: 3;
+        }
+        
+        .testimonial-card.prev {
+            opacity: 0.7;
+            transform: translateX(-80%) scale(0.85) rotateY(15deg);
+            z-index: 2;
+        }
+        
+        .testimonial-card.next {
+            opacity: 0.7;
+            transform: translateX(80%) scale(0.85) rotateY(-15deg);
+            z-index: 2;
         }
         
         .testimonial-card::before {
@@ -641,14 +679,72 @@
             font-family: Georgia, serif;
             line-height: 1;
             opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .testimonial-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(232, 213, 196, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg) scale(1); opacity: 0; }
+            50% { transform: rotate(180deg) scale(1.1); opacity: 1; }
         }
         
         .testimonial-image {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 50%;
             margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(139, 115, 85, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(139, 115, 85, 0); }
+        }
+        
+        .testimonial-initial {
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 30px;
+        }
+        
+        .star {
+            font-size: 1.5rem;
+            color: #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .star.filled {
+            color: #f4c430;
+            animation: starPop 0.3s ease;
+        }
+        
+        @keyframes starPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
         
         .testimonial-text {
@@ -657,18 +753,134 @@
             color: var(--text-dark);
             margin-bottom: 30px;
             font-weight: 300;
+            position: relative;
         }
         
         .testimonial-author {
             font-weight: 700;
             color: var(--primary-color);
             font-size: 1.2rem;
+            margin-bottom: 5px;
         }
         
         .testimonial-role {
             color: var(--text-light);
             font-size: 1rem;
-            margin-top: 5px;
+        }
+        
+        /* Navigation Buttons */
+        .testimonial-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--secondary-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 4;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .testimonial-prev {
+            left: 0;
+        }
+        
+        .testimonial-next {
+            right: 0;
+        }
+        
+        .testimonial-nav:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Dots Navigation */
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(139, 115, 85, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .dot:hover {
+            background: rgba(139, 115, 85, 0.5);
+        }
+        
+        .dot.active {
+            background: var(--primary-color);
+            width: 30px;
+            border-radius: 6px;
+        }
+        
+        .dot.active::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            opacity: 0.3;
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .testimonials-wrapper {
+                padding: 0 20px;
+            }
+            
+            .testimonial-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+            
+            .testimonial-prev {
+                left: -10px;
+            }
+            
+            .testimonial-next {
+                right: -10px;
+            }
+            
+            .testimonials-slider {
+                height: 600px;
+            }
+            
+            .testimonial-card {
+                padding: 40px 30px;
+            }
+            
+            .testimonial-card.prev,
+            .testimonial-card.next {
+                opacity: 0;
+                pointer-events: none;
+            }
         }
         
         /* CTA Section */
@@ -1088,14 +1300,22 @@
                 <p class="section-subtitle">סיפורי הצלחה מרגשים מהמסע האישי</p>
             </div>
             
-            <div class="testimonial-card">
-                <div class="testimonial-image"></div>
-                <p class="testimonial-text">
-                    "הקלפים האלה פשוט שינו לי את החיים. כל בוקר אני מתחילה עם קלף 
-                    והמסר שלו מלווה אותי כל היום. זה כמו מאמן אישי בכיס!"
-                </p>
-                <div class="testimonial-author">שרה כהן</div>
-                <div class="testimonial-role">מטפלת רגשית</div>
+            <div class="testimonials-wrapper">
+                <button class="testimonial-nav testimonial-prev" aria-label="המלצה קודמת">
+                    <span>‹</span>
+                </button>
+                
+                <div class="testimonials-slider" id="testimonialsSlider">
+                    <!-- Testimonials will be loaded dynamically -->
+                </div>
+                
+                <button class="testimonial-nav testimonial-next" aria-label="המלצה הבאה">
+                    <span>›</span>
+                </button>
+            </div>
+            
+            <div class="testimonial-dots" id="testimonialDots">
+                <!-- Dots will be created dynamically -->
             </div>
         </div>
     </section>
@@ -1317,57 +1537,225 @@
             });
         });
 
-        // Add floating animation to background shapes
-        const shapes = document.querySelectorAll('.bg-shape');
+        // Testimonials Data and Carousel
+        let currentTestimonial = 0;
+        let testimonialInterval;
+        let testimonialsData = [];
         
-        shapes.forEach((shape, index) => {
-            shape.style.animationDelay = `${index * 5}s`;
-        });
-
-        // Dynamic text animation on scroll
-        const animateValue = (element, start, end, duration) => {
-            const range = end - start;
-            const increment = range / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= end) {
-                    current = end;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current);
-            }, 16);
-        };
-
-        // Counter animation for numbers
-        const counters = document.querySelectorAll('[data-counter]');
-        
-        counters.forEach(counter => {
-            const observerCounter = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                        entry.target.classList.add('counted');
-                        const endValue = parseInt(entry.target.getAttribute('data-counter'));
-                        animateValue(entry.target, 0, endValue, 2000);
+        // Load testimonials from file
+        async function loadTestimonials() {
+            try {
+                // In a real implementation, this would fetch from testimonials.txt
+                // For this demo, we'll use the data directly
+                testimonialsData = [
+                    {
+                        name: "שרה כהן",
+                        role: "מטפלת רגשית",
+                        text: "הקלפים האלה פשוט שינו לי את החיים. כל בוקר אני מתחילה עם קלף והמסר שלו מלווה אותי כל היום. זה כמו מאמן אישי בכיס!",
+                        initial: "ש"
+                    },
+                    {
+                        name: "דניאל ומיכל לוי",
+                        role: "זוג נשוי",
+                        text: "קניתי את קלפי היחסים ומאז הקשר שלנו התחזק בצורה מדהימה. אנחנו משתמשים בהם כל שבוע ונהנים מכל רגע!",
+                        initial: "ד"
+                    },
+                    {
+                        name: "רונית ברק",
+                        role: "מנהלת שיווק",
+                        text: "קלפי המיינדפולנס עזרו לי להתמודד עם חרדות ולחץ. התרגילים פשוטים אבל כל כך אפקטיביים. ממליצה בחום!",
+                        initial: "ר"
+                    },
+                    {
+                        name: "אורי גולדברג",
+                        role: "יועץ עסקי",
+                        text: "השתמשתי בקלפי הביטחון העצמי לפני מצגות חשובות. השינוי בביטחון שלי היה מיידי ומורגש. כלי מדהים!",
+                        initial: "א"
+                    },
+                    {
+                        name: "תמר אביטל",
+                        role: "מורה ליוגה",
+                        text: "הקלפים משתלבים נהדר בשיעורים שלי. התלמידים אוהבים לקבל השראה יומית והאנרגיה בכיתה השתנתה לגמרי.",
+                        initial: "ת"
+                    },
+                    {
+                        name: "יוסי ונעמה כהן",
+                        role: "הורים לשלושה",
+                        text: "הקלפים הפכו לחלק מהשגרה המשפחתית שלנו. הילדים מחכים בכיף לקלף היומי וזה יוצר שיחות מדהימות.",
+                        initial: "י"
                     }
-                });
-            }, { threshold: 0.5 });
-            
-            observerCounter.observe(counter);
-        });
-
-        // Add subtle mouse follow effect to hero content
-        const heroContent = document.querySelector('.hero-content');
-        
-        document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) {
-                const x = (e.clientX - window.innerWidth / 2) / 50;
-                const y = (e.clientY - window.innerHeight / 2) / 50;
+                ];
                 
-                heroContent.style.transform = `translateX(${x}px) translateY(${y}px)`;
+                // Initialize testimonials display with 3 visible at a time
+                initializeTestimonials();
+            } catch (error) {
+                console.error('Error loading testimonials:', error);
             }
+        }
+        
+        function initializeTestimonials() {
+            const slider = document.getElementById('testimonialsSlider');
+            const dotsContainer = document.getElementById('testimonialDots');
+            
+            if (!slider || !dotsContainer) return;
+            
+            // Clear existing content
+            slider.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            
+            // Create testimonial cards (only show 3 at a time)
+            const visibleTestimonials = 3;
+            for (let i = 0; i < visibleTestimonials && i < testimonialsData.length; i++) {
+                const testimonial = testimonialsData[i];
+                const card = createTestimonialCard(testimonial);
+                slider.appendChild(card);
+            }
+            
+            // Create dots for all testimonials
+            testimonialsData.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.dataset.slide = index;
+                dot.addEventListener('click', () => goToTestimonial(index));
+                dotsContainer.appendChild(dot);
+            });
+            
+            // Set up navigation
+            const prevBtn = document.querySelector('.testimonial-prev');
+            const nextBtn = document.querySelector('.testimonial-next');
+            
+            prevBtn?.addEventListener('click', prevTestimonial);
+            nextBtn?.addEventListener('click', nextTestimonial);
+            
+            // Initialize display
+            updateTestimonials();
+            
+            // Start auto-rotation (3 seconds)
+            startAutoRotation();
+        }
+        
+        function createTestimonialCard(testimonial) {
+            const card = document.createElement('div');
+            card.className = 'testimonial-card';
+            card.innerHTML = `
+                <div class="testimonial-image">
+                    <span class="testimonial-initial">${testimonial.initial}</span>
+                </div>
+                <div class="stars">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                </div>
+                <p class="testimonial-text">"${testimonial.text}"</p>
+                <div class="testimonial-author">${testimonial.name}</div>
+                <div class="testimonial-role">${testimonial.role}</div>
+            `;
+            return card;
+        }
+        
+        function updateTestimonials() {
+            const cards = document.querySelectorAll('.testimonial-card');
+            const dots = document.querySelectorAll('.dot');
+            const slider = document.getElementById('testimonialsSlider');
+            
+            // Update cards with new testimonials
+            cards.forEach((card, index) => {
+                const testimonialIndex = (currentTestimonial + index) % testimonialsData.length;
+                const testimonial = testimonialsData[testimonialIndex];
+                
+                // Update card content
+                card.querySelector('.testimonial-initial').textContent = testimonial.initial;
+                card.querySelector('.testimonial-text').textContent = `"${testimonial.text}"`;
+                card.querySelector('.testimonial-author').textContent = testimonial.name;
+                card.querySelector('.testimonial-role').textContent = testimonial.role;
+                
+                // Update card classes
+                card.classList.remove('active', 'prev', 'next');
+                
+                if (index === 0) {
+                    card.classList.add('prev');
+                } else if (index === 1) {
+                    card.classList.add('active');
+                } else if (index === 2) {
+                    card.classList.add('next');
+                }
+            });
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentTestimonial);
+            });
+            
+            // Animate stars on active testimonial
+            const activeCard = cards[1]; // Middle card is active
+            if (activeCard) {
+                const stars = activeCard.querySelectorAll('.star');
+                stars.forEach((star, index) => {
+                    setTimeout(() => {
+                        star.style.animation = 'none';
+                        setTimeout(() => {
+                            star.style.animation = 'starPop 0.3s ease';
+                        }, 10);
+                    }, index * 100);
+                });
+            }
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonialsData.length;
+            updateTestimonials();
+            resetAutoRotation();
+        }
+        
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + testimonialsData.length) % testimonialsData.length;
+            updateTestimonials();
+            resetAutoRotation();
+        }
+        
+        function goToTestimonial(index) {
+            currentTestimonial = index;
+            updateTestimonials();
+            resetAutoRotation();
+        }
+        
+        function startAutoRotation() {
+            testimonialInterval = setInterval(nextTestimonial, 3000); // 3 seconds
+        }
+        
+        function resetAutoRotation() {
+            clearInterval(testimonialInterval);
+            startAutoRotation();
+        }
+        
+        // Touch/Swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const testimonialSection = document.querySelector('.testimonials-slider');
+        
+        testimonialSection?.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
         });
+        
+        testimonialSection?.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextTestimonial();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevTestimonial();
+            }
+        }
+        
+        // Load testimonials when page loads
+        document.addEventListener('DOMContentLoaded', loadTestimonials);
     </script>
 </body>
 </html>
