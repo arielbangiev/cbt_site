@@ -584,7 +584,7 @@
         /* Testimonials */
         .testimonials {
             padding: 120px 0;
-            background: var(--bg-light);
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8ddd4 100%);
             position: relative;
         }
         
@@ -595,9 +595,20 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><g opacity="0.04"><rect x="100" y="100" width="80" height="120" rx="5" fill="%23e8d5c4" transform="rotate(-10 140 160)"/><rect x="300" y="150" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(15 340 210)"/><rect x="500" y="200" width="80" height="120" rx="5" fill="%23e8d5c4" transform="rotate(-20 540 260)"/><rect x="700" y="100" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(10 740 160)"/><rect x="900" y="250" width="80" height="120" rx="5" fill="%23e8d5c4" transform="rotate(-15 940 310)"/><rect x="1000" y="150" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(20 1040 210)"/><rect x="200" y="300" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(5 240 360)"/><rect x="400" y="350" width="80" height="120" rx="5" fill="%23e8d5c4" transform="rotate(-25 440 410)"/><rect x="600" y="400" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(12 640 460)"/><rect x="800" y="320" width="80" height="120" rx="5" fill="%23e8d5c4" transform="rotate(-8 840 380)"/></g></svg>');
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><g opacity="0.08"><rect x="100" y="100" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(-10 140 160)"/><rect x="300" y="150" width="80" height="120" rx="5" fill="%23a08770" transform="rotate(15 340 210)"/><rect x="500" y="200" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(-20 540 260)"/><rect x="700" y="100" width="80" height="120" rx="5" fill="%23a08770" transform="rotate(10 740 160)"/><rect x="900" y="250" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(-15 940 310)"/><rect x="1000" y="150" width="80" height="120" rx="5" fill="%23a08770" transform="rotate(20 1040 210)"/><rect x="200" y="300" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(5 240 360)"/><rect x="400" y="350" width="80" height="120" rx="5" fill="%23a08770" transform="rotate(-25 440 410)"/><rect x="600" y="400" width="80" height="120" rx="5" fill="%238b7355" transform="rotate(12 640 460)"/><rect x="800" y="320" width="80" height="120" rx="5" fill="%23a08770" transform="rotate(-8 840 380)"/></g></svg>');
             background-repeat: repeat;
             background-size: cover;
+            z-index: 0;
+        }
+        
+        .testimonials::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(232, 213, 196, 0.3) 100%);
             z-index: 0;
         }
         
@@ -610,13 +621,14 @@
         }
         
         .testimonial-card {
-            background: var(--bg-cream);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 30px;
             padding: 60px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            box-shadow: 0 25px 80px rgba(139, 115, 85, 0.15);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(232, 213, 196, 0.5);
         }
         
         .testimonial-card::before {
@@ -625,9 +637,10 @@
             top: 30px;
             right: 40px;
             font-size: 8rem;
-            color: var(--secondary-color);
+            color: var(--primary-color);
             font-family: Georgia, serif;
             line-height: 1;
+            opacity: 0.3;
         }
         
         .testimonial-image {
